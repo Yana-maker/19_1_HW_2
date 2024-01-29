@@ -1,0 +1,34 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+{% if perms.articles.add_article %}
+    <div class="col-12-mb-4">
+      <a class="btn btn-outline-success" href="{% url 'articles:create' %}">Добавить Статью</a>
+    </div>
+{% endif %}
+
+{% for object in object_list %}
+  <div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+      <div class="card-body">
+        <p class="card-text">
+          {{ object.title }}
+        </p>
+        <div class="d-flex-justify-content-between align-items-center">
+          <div class="btn-group">
+            {% if perms.articles.view_article %}
+                <a href="{% url 'articles:view' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">просмотр</a>
+            {% endif %}
+            {% if perms.articles.change_article %}
+                <a href="{% url 'articles:edit' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">изменить</a>
+            {% endif %}
+            {% if perms.articles.delete_article %}
+                <a href="{% url 'articles:delete' object.pk %}" type="button" class="btn btn-sm btn-outline-danger">удалить</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

@@ -47,6 +47,8 @@ class Product(models.Model):
              'редактирование категории продукт'),
             ('set_product_price',
              'редактирования цены продукт'),
+            ('set_is_published',
+             'редактирования статуса публикации'),
         )
 
 
@@ -71,5 +73,17 @@ class Version(models.Model):
         verbose_name = 'версия'
         verbose_name_plural = 'версии'
         ordering = ('product_name',)
+
+        permissions = (
+
+            ('set_product_name',
+             'редактирование продукта'),
+            ('set_number_version',
+             'редактирование номера версии'),
+            ('set_name_version',
+             'редактирование названии версии'),
+            ('set_is_current_version',
+             'редактирование статуса версии'),
+        )
 
 

@@ -1,7 +1,5 @@
-from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
+
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
@@ -42,6 +40,7 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         'title': 'СОЗДАНИЕ ПРОДУКТА'
     }
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         VersionFormSet = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
@@ -60,6 +59,7 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
 
 
 class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -100,6 +100,7 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
             for field in product_fields:
                 if not self.request.user.has_perm(f'catalog.{field}'):
                     del form.fields[field]
+
         return form
 
 

@@ -1,8 +1,9 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
-from mailing.forms import Text_MailingForm, ClientForm, Log_MailingForm, MailingForm
-from mailing.models import Text_Mailing, Client, Log_Mailing, Mailing
+from mailing.forms import ClientForm, Log_MailingForm, MailingForm
+from mailing.models import Client, Log_Mailing, Mailing
 
 
 class ClientCreateView(CreateView):
@@ -33,7 +34,17 @@ class ClientUpdateView(UpdateView):
     }
 
 
-class MailingCreateView(CreateView):
+class ClientDeleteView(DeleteView):
+    model = Client
+    form_class = ClientForm
+    success_url = reverse_lazy('mailing:list')
+
+    extra_context = {
+        'title': 'УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ'
+    }
+
+
+class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('mailing:list')
@@ -43,7 +54,7 @@ class MailingCreateView(CreateView):
     }
 
 
-class MailingListView(ListView):
+class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
     form_class = MailingForm
 
@@ -52,7 +63,17 @@ class MailingListView(ListView):
     }
 
 
-class MailingUpdateView(UpdateView):
+class MailingDeleteView(LoginRequiredMixin, DeleteView):
+    model = Mailing
+    form_class = MailingForm
+    success_url = reverse_lazy('mailing:list')
+
+    extra_context = {
+        'title': 'УДАЛЕНИЕ РАССЫЛКИ'
+    }
+
+
+class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('mailing:list')
@@ -62,35 +83,7 @@ class MailingUpdateView(UpdateView):
     }
 
 
-class Text_MailingCreateView(CreateView):
-    model = Text_Mailing
-    form_class = Text_MailingForm
-    success_url = reverse_lazy('mailing:list')
-
-    extra_context = {
-        'title': 'СОЗДАНИЕ ТЕКСТА ДЛЯ РАССЫЛКИ'
-    }
-
-
-class Text_MailingListView(ListView):
-    model = Text_Mailing
-    form_class = Text_MailingForm
-
-    extra_context = {
-        'title': 'ПРОСМОТР ТЕКСТА ДЛЯ РАССЫЛКИ'
-    }
-
-
-class Text_MailingUpdateView(UpdateView):
-    model = Text_Mailing
-    form_class = Text_MailingForm
-
-    extra_context = {
-        'title': 'РЕДАКТИРОВАНИЕ ТЕКСТА ДЛЯ РАССЫЛКИ'
-    }
-
-
-class Log_MailingListView(ListView):
+class Log_MailingListView(LoginRequiredMixin, ListView):
     model = Log_Mailing
     form_class = Log_MailingForm
 

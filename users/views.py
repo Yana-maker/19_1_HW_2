@@ -29,7 +29,7 @@ class RegisterView(CreateView):
         new_user.save()
         send_mail(
             subject="Регистрация на сайте ",
-            message=f'Поздравляем с успешной регистрацией , код для подтверждения {verification_code}',
+            message=f'Поздравляем с успешной регистрацией, код для подтверждения {verification_code}',
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[new_user.email],
         )

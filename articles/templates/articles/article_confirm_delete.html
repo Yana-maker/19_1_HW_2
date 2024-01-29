@@ -8,11 +8,14 @@
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
+                        {% if perms.articles.delete_article %}
                         <p>Удалить запись "{{ object }}"?</p>
                         <button type="submit" class="btn btn-outline-danger form-control m-2">
                             Подтвердить
+                        {% endif %}
                         </button>
-                        <a href="{% url 'article:list' %}" class="btn btn-outline-warning form-control m-2">Отмена</a>
+                        <a href="{% url 'articles:list' %}" class="btn btn-outline-warning form-control m-2">Отмена</a>
+
                     </form>
                 </div>
             </div>

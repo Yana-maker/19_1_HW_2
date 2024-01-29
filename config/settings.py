@@ -36,9 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_apscheduler',
 
     'catalog',
-    'article',
+    'articles',
     'users',
     'mailing',
 ]
@@ -93,7 +94,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'term_project6',
+        'NAME': 'kursach6',
         'USER': 'postgres',
         'PASSWORD': 432502,
         'HOST': 'localhost',
@@ -122,9 +123,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
+USE_TZ = False
 
 USE_I18N = True
 
@@ -156,3 +158,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sendinfoforauth@gmail.com'
 EMAIL_HOST_PASSWORD = 'vmvvkaedltkhkieb'
 EMAIL_USE_TLS = True
+
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"

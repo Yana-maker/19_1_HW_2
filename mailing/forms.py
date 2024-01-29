@@ -1,5 +1,5 @@
 from django import forms
-from mailing.models import Client, Text_Mailing, Log_Mailing, Mailing
+from mailing.models import Client, Log_Mailing, Mailing
 
 
 class StyleFormMixin:
@@ -8,11 +8,6 @@ class StyleFormMixin:
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 
-
-class Text_MailingForm(StyleFormMixin):
-    class Meta:
-        model = Text_Mailing
-        fields = ('subject', 'body', 'mailing',)
 
 
 class MailingForm(StyleFormMixin):
@@ -25,6 +20,15 @@ class ClientForm(StyleFormMixin):
     class Meta:
         model = Client
         fields = ('client_email', 'client_fio', 'client_comment',)
+
+
+    def clean_client_email(self):
+        cleaned_data = self.cleaned_data['client_email']
+        if '@' not in cleaned_data:
+            raise ValueError('почта должна содержать специальный символ "@')
+        return cleaned_data
+
+
 
 
 class Log_MailingForm(StyleFormMixin):

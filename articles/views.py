@@ -1,16 +1,19 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from article.models import Article
+
+from .forms import ArticleForm
+from .models import Article
 from pytils.translit import slugify
 
 
 # Create your views here.
 
-class ArticleCreateView(LoginRequiredMixin, CreateView):
+class ArticleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Article
-    fields = ('title', 'text', 'preview')
-    success_url = reverse_lazy('article:list')
+    form_class = ArticleForm
+    success_url = reverse_lazy('articles:list')
+    permission_required = 'articles.add_article'
     extra_context = {
         'title': 'СОЗДАНИЕ СТАТЬИ'
     }
@@ -23,8 +26,10 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ArticleListView(LoginRequiredMixin, ListView):
+class ArticleListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Article
+    form_class = ArticleForm
+    permission_required = 'articles.view_article'
     extra_context = {
         'title': 'СТАТЬИ'
     }
@@ -35,8 +40,11 @@ class ArticleListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class ArticleDetailView(LoginRequiredMixin, DetailView):
+class ArticleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Article
+
+    form_class = ArticleForm
+    permission_required = 'articles.view_article'
     extra_context = {
         'title': 'ИНФО И СТАТЬЕ'
     }
@@ -48,15 +56,16 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
         return self.object
 
 
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Article
-    fields = ('title', 'text', 'preview')
+    form_class = ArticleForm
+    permission_required = 'articles.change_article'
     extra_context = {
         'title': 'РЕДАКТИРОВАНИЕ СТАТЬИ'
     }
 
     def get_success_url(self):
-        return reverse('article:view', args=[self.object.pk])
+        return reverse('articles:view', args=[self.object.pk])
 
     def form_valid(self, form):
         if form.is_valid():
@@ -67,11 +76,11 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
 
 
-
-
-class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Article
-    success_url = reverse_lazy('article:list')
+    form_class = ArticleForm
+    success_url = reverse_lazy('articles:list')
+    permission_required = 'articles.delete_article'
     extra_context = {
         'title': 'УДАЛЕНИЕ СТАТЬИ'
     }

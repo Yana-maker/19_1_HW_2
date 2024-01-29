@@ -1,6 +1,6 @@
 from django.urls import path
-from article.apps import ArticleConfig
-from article.views import ArticleCreateView, ArticleListView, ArticleDetailView, ArticleUpdateView, ArticleDeleteView
+from articles.apps import ArticleConfig
+from articles.views import ArticleCreateView, ArticleListView, ArticleDetailView, ArticleUpdateView, ArticleDeleteView
 
 app_name = ArticleConfig.name
 

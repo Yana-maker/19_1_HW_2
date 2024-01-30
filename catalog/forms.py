@@ -22,7 +22,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         name = self.cleaned_data['product_name'].lower()
 
         for word in self.forbidden_words:
-            if word in name:
+            if name in word:
                 raise forms.ValidationError(f"Нельзя использовать слово '{word}' в названии продукта.")
         return name
 
@@ -50,4 +50,4 @@ class ContactsForm(StyleFormMixin, forms.ModelForm):
 class VersionForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Version
-        fields = '__all__'
+        fields = ('product_name', 'number_version', 'name_version', 'is_current_version')

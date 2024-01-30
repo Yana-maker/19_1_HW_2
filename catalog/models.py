@@ -31,6 +31,7 @@ class Product(models.Model):
     owner_product = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
                                       verbose_name='добавил:')
 
+
     def __str__(self):
         return f"{self.product_name}"
 
@@ -46,9 +47,9 @@ class Product(models.Model):
             ('set_product_category',
              'редактирование категории продукт'),
             ('set_product_price',
-             'редактирования цены продукт'),
+             'цена продукт'),
             ('set_is_published',
-             'редактирования статуса публикации'),
+             'статус публикации'),
         )
 
 
@@ -68,6 +69,7 @@ class Version(models.Model):
     number_version = models.IntegerField(verbose_name='номер')
     name_version = models.CharField(max_length=150, verbose_name='название версии')
     is_current_version = models.BooleanField(default=True, verbose_name='признак версии')
+
 
     class Meta:
         verbose_name = 'версия'

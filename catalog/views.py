@@ -12,6 +12,7 @@ from catalog.forms import ProductForm, ContactsForm, VersionForm
 
 
 class ProductListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+
     model = Product
 
     permission_required = 'catalog.view_product'
@@ -26,8 +27,6 @@ class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     extra_context = {
         'title': 'ПРОСМОТР ПРОДУКТА'
     }
-
-
 
 
 class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -61,7 +60,6 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
-
 class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
@@ -89,9 +87,9 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
             formset.save()
         return super().form_valid(form)
 
-    def get_form(self, form_class=None):
+    def get_form(self, form_class=form_class):
         """
-        Если у пользователя нет прав на редактирование поля удаляем его из формы.
+        Если у пользователя нет прав на редактирование поля удаляем поле из формы.
         """
         form = super().get_form(form_class)
         if self.object.owner_product != self.request.user:
@@ -102,7 +100,6 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
                     del form.fields[field]
 
         return form
-
 
 
 class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):

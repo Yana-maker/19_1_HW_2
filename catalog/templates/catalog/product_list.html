@@ -12,8 +12,9 @@
 
 <div class="col-6-mb-5">
   <div class="card-body">
+    {% if object.is_published %}
     <img src="/media/{{ object.product_image }}" alt="Avatar" Width="300" Height="250">
-    <div class="container">
+     <div class="container">
       <h4><b>{{ object }}</b></h4>
     </div>
     <div class="btn-group">
@@ -23,6 +24,7 @@
       {% endif %}
       {% if perms.catalog.delete_product %}
           <a href="{% url 'catalog:delete' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">удалить</a>
+      {% endif %}
       {% endif %}
     </div>
   </div>

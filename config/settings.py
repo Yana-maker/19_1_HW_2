@@ -13,6 +13,8 @@ import os.path
 from pathlib import Path
 from random import random
 
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
+# Application definition,
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,13 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_apscheduler',
 
+
     'catalog',
     'articles',
     'users',
     'mailing',
 ]
-
-
 
 STATUS = (
     ('завершена', 'завершена'),
@@ -56,7 +57,6 @@ STATUS_ATTEMPT = (
     ('УСПЕШНО', 'УСПЕШНО'),
     ('НЕ УСПЕШНО', 'НЕ УСПЕШНО'),
 )
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -159,5 +159,24 @@ EMAIL_HOST_USER = 'sendinfoforauth@gmail.com'
 EMAIL_HOST_PASSWORD = 'vmvvkaedltkhkieb'
 EMAIL_USE_TLS = True
 
-
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+
+
+
+
+# settings.py
+LOW_CACHED = True
+
+if LOW_CACHED:
+    CACHE = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379",
+        }
+    }
+
+
+
+load_dotenv(BASE_DIR / '.env')
+
+

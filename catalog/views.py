@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from catalog.models import Product, Contacts, Version
 from catalog.forms import ProductForm, ContactsForm, VersionForm
+from catalog.services import get_cached_product_list
 
 
 # Create your views here.
@@ -21,12 +22,20 @@ class ProductListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     }
 
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['product_list'] = get_cached_product_list(self.object.pk)
+        return context_data
+
+
 class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Product
     permission_required = 'catalog.view_product'
     extra_context = {
         'title': 'ПРОСМОТР ПРОДУКТА'
     }
+
+
 
 
 class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):

@@ -6,17 +6,30 @@ pip freeze > requirements.txt - сохранение всех зависимос
 
 
 
+установка redis:
+
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+sudo apt-get update
+sudo apt-get install redis
 
 
 
-      <p class="d-flex justify-content-between align-items-center">
-        <img src="{{ object.product_image|mediapath }}" Width="250" Height="200">
-      </p>
 
-      <p class="d-flex justify-content-between align-items-center">
-        {{object.product_price}} руб
-      </p>
-
-      <p class="d-flex justify-content-between align-items-center">
-        {{object.product_description|slice:100}}...
-      </p>
+# views.py или другой вспомогательный файл
+def cache_example():
+    if CACHE_ENABLED:
+        # Проверяем включенность кеша
+        key = f'students_list' # Создаем ключ для хранения
+        students_list = cache.get(key) # Пытаемся получить данные
+        if students_list is None:
+            # Если данные не были получены из кеша, то выбираем из БД и записываем в кеш
+            students_list = Student.objects.all()
+            cache.set(key, students_list)
+    else:
+        # Если кеш не был подключен, то просто обращаемся к БД
+        students_list = Student.objects.all()
+    # Возвращаем результат
+    return students_list

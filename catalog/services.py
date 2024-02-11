@@ -4,16 +4,14 @@ from catalog.models import Product
 from django.core.cache import cache
 
 
-def get_cached_product_list(product_pk):
 
+def get_cached_product_list():
+    key = 'product_list'
+    queryset = Product.objects.all()
     if settings.LOW_CACHED:
-        key = f'{product_pk}'
         product_list = cache.get(key)
-
         if product_list is None:
-            product_list = Product.objects.all()
+            product_list = queryset
             cache.set(key, product_list)
-        else:
-            product_list = Product.objects.all()
-
         return product_list
+    return queryset

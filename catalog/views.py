@@ -24,7 +24,7 @@ class ProductListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['product_list'] = get_cached_product_list(self.object.pk)
+        context_data['objects_list'] = get_cached_product_list()
         return context_data
 
 

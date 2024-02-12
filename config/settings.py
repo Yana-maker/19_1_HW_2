@@ -15,6 +15,7 @@ from random import random
 
 from dotenv import load_dotenv
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,10 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-dr_#py6q5yxfoag9%r1y%o*fhl=1u_o1yqyudqg(i2a@-g(kvq'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = []
+
+
+
+# dotenv
+load_dotenv(BASE_DIR / '.env')
+
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG')
 
 # Application definition,
 
@@ -94,11 +103,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kursach6',
-        'USER': 'postgres',
-        'PASSWORD': 432502,
-        'HOST': 'localhost',
-        'PORT': 5432,
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
     }
 }
 
@@ -171,12 +180,12 @@ if LOW_CACHED:
     CACHE = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
+            "LOCATION": os.getenv('REDIS_HOST'),
         }
     }
 
 
 
-load_dotenv(BASE_DIR / '.env')
+
 
 

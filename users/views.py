@@ -48,6 +48,8 @@ def pass_verification(request):
             user.is_active = True
             user.save()
             return redirect(reverse('users:login'))
+        else:
+            return redirect(reverse('users:verification'))
 
     else:
         return render(request, 'users/verification_form.html')

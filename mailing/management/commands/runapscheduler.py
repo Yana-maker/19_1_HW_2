@@ -12,7 +12,6 @@ from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 
 from jobs.jobs import send_mailings
-from mailing.models import Mailing
 
 logger = logging.getLogger(__name__)
 

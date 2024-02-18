@@ -31,6 +31,9 @@
                 <li><a class="nav-link" href="{% url 'catalog:contacts' %}">Контакты</a></li>
                 <li><a class="nav-link" href="{% url 'articles:list' %}">Статьи</a></li>
                 <li><a class="nav-link" href="{% url 'mailing:list' %}">рассылки</a></li>
+                <li><a class="nav-link" href="{% url 'mailing:Text_Mailinglist' %}"> текст рассылки</a></li>
+                <li><a class="nav-link" href="{% url 'mailing:Clientlist' %}">пользователи для рассылки</a></li>
+                <li><a class="nav-link" href="{% url 'mailing:Log_Mailinglist' %}">логи рассылки</a></li>
                 {% if user.is_authenticated %}
                     <li><a class="nav-link" href="{% url 'users:logout' %}">Выйти</a></li>
                     <li><a class="nav-link" href="{% url 'users:profile' %}">редактировать профиль</a></li>

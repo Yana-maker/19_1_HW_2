@@ -1,5 +1,5 @@
 from django import forms
-from mailing.models import Client, Log_Mailing, Mailing
+from mailing.models import Client, Log_Mailing, Mailing, Text_Mailing
 
 
 class StyleFormMixin:
@@ -35,3 +35,11 @@ class Log_MailingForm(StyleFormMixin):
     class Meta:
         model = Log_Mailing
         fields = ('datatime_last_attempt', 'status_attempt', 'answer_mail_server', 'mailing',)
+
+
+
+class Text_MailingForm(StyleFormMixin):
+
+    class Meta:
+        model = Text_Mailing
+        fields = ('subject', 'body', 'client_email',)

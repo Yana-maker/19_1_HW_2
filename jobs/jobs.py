@@ -3,7 +3,7 @@ from config.settings import TIME_ZONE
 import datetime
 import pytz
 from django.core.mail import send_mail
-from mailing.models import Mailing, Log_Mailing, Client
+from mailing.models import Mailing, Log_Mailing, Client, Text_Mailing
 
 
 
@@ -11,7 +11,7 @@ from mailing.models import Mailing, Log_Mailing, Client
 
 def send_mailings():
 
-    mailing = Mailing.objects.get()
+    mailing = Text_Mailing.objects.get()
     client = Client.objects.get()
 
 
@@ -23,7 +23,7 @@ def send_mailings():
             recipient_list=[client.client_email],
         )
         Log_Mailing.objects.create(
-            mailing=Mailing.subject,
+            mailing=mailing.subject,
             datatime_last_attempt=datetime.datetime.now(),
             status_attempt='УСПЕШНО',
         )

@@ -56,16 +56,6 @@ INSTALLED_APPS = [
     'mailing',
 ]
 
-STATUS = (
-    ('завершена', 'завершена'),
-    ('создана', 'создана'),
-    ('запущена', 'запущена'),
-)
-
-STATUS_ATTEMPT = (
-    ('УСПЕШНО', 'УСПЕШНО'),
-    ('НЕ УСПЕШНО', 'НЕ УСПЕШНО'),
-)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -145,6 +135,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
@@ -161,12 +152,12 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sendinfoforauth@gmail.com'
-EMAIL_HOST_PASSWORD = 'vmvvkaedltkhkieb'
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 

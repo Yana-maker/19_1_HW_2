@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailing.models import Client, Mailing, Log_Mailing
+from mailing.models import Client, Mailing, Log_Mailing, Text_Mailing
 
 
 # Register your models here.
@@ -13,9 +13,16 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):
-    list_display = ('name', 'frequency',)
-    list_filter = ('name', 'frequency',)
-    search_fields = ('name', 'frequency',)
+    list_display = ('time_mailing', 'frequency',)
+    list_filter = ('time_mailing', 'frequency',)
+    search_fields = ('time_mailing', 'frequency',)
+
+
+@admin.register(Text_Mailing)
+class Text_MailingAdmin(admin.ModelAdmin):
+    list_display = ('subject', 'body',)
+    list_filter = ('subject', 'body',)
+    search_fields = ('subject', 'body',)
 
 
 @admin.register(Log_Mailing)

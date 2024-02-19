@@ -36,6 +36,8 @@ class Client(models.Model):
     client_email = models.EmailField(unique=True, verbose_name='почта')
     client_fio = models.CharField(max_length=500, verbose_name='фио')
     client_comment = models.CharField(max_length=500, verbose_name='комментарий')
+    owner_client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                                           verbose_name='автор:')
 
     def __str__(self):
         return f"{self.client_fio}"
@@ -54,7 +56,8 @@ class Mailing(models.Model):
     frequency = models.CharField(max_length=20, choices=Frequency.choices, default='ежедневно',
                                  verbose_name='периодичность')
     status_mailing = models.CharField(max_length=20, default='создана', choices=STATUS.choices, verbose_name='статус')
-
+    owner_mailing = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                                           verbose_name='автор:')
     def __str__(self):
         return f'{self.frequency}'
 
@@ -70,6 +73,8 @@ class Text_Mailing(models.Model):
     body = models.CharField(verbose_name='тело письма', **NULLABLE)
     client_email = models.ManyToManyField(Client, verbose_name='клиенты')
     frequency = models.ForeignKey(Mailing, verbose_name='периодичность', on_delete=models.CASCADE, **NULLABLE)
+    owner_text_mailing = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                                      verbose_name='автор:')
 
     def __str__(self):
         return f'{self.subject}'

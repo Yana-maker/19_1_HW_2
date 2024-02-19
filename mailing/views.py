@@ -16,6 +16,11 @@ class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         'title': 'ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ДЛЯ РАССЫЛОК'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_client=self.request.user
+        )
+
 
 class ClientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Client
@@ -25,6 +30,11 @@ class ClientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     extra_context = {
         'title': 'СПИСОК ПОЛЬЗОВАТЕЛЕЙ ДЛЯ РАССЫЛОК'
     }
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_client=self.request.user
+        )
 
 
 class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -37,6 +47,11 @@ class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         'title': 'РЕДАКТИРОВАНИЕ ПОЛЬЗОВАТЕЛЕЙ ДЛЯ РАССЫЛОК'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_client=self.request.user
+        )
+
 
 class ClientDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Client
@@ -46,6 +61,11 @@ class ClientDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     extra_context = {
         'title': 'ПРОСМОТР ПОЛЬЗОВАТЕЛЯ'
     }
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_client=self.request.user
+        )
 
 
 class ClientDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
@@ -58,6 +78,11 @@ class ClientDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
         'title': 'УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_client=self.request.user
+        )
+
 
 class MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Mailing
@@ -69,6 +94,11 @@ class MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         'title': 'СОЗДАНИЕ ПЕРИОДИЧНОСТИ ДЛЯ РАССЫЛКИ'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_mailing=self.request.user
+        )
+
 
 class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Mailing
@@ -79,6 +109,11 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         'title': 'ПРОСМОТР СПИСКА ПЕРИОДИЧНОСТИ РАССЫЛОК'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_mailing=self.request.user
+        )
+
 
 class MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Mailing
@@ -88,6 +123,11 @@ class MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     extra_context = {
         'title': 'ПРОСМОТР рассылки'
     }
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_mailing=self.request.user
+        )
 
 
 
@@ -102,6 +142,11 @@ class MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
         'title': 'УДАЛЕНИЕ РАССЫЛКИ'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_mailing=self.request.user
+        )
+
 
 class MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Mailing
@@ -112,6 +157,11 @@ class MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     extra_context = {
         'title': 'РЕДАКТИРОВАНИЕ ПЕРИОДИЧНОСТИ РАССЫЛКИ'
     }
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_mailing=self.request.user
+        )
 
 
 class Log_MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -125,6 +175,8 @@ class Log_MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView)
 
 
 
+
+
 class Text_MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Text_Mailing
     form_class = Text_MailingForm
@@ -135,6 +187,11 @@ class Text_MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, Create
         'title': 'СОЗДАНИЕ ПЕРИОДИЧНОСТИ ДЛЯ РАССЫЛКИ'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_text_mailing=self.request.user
+        )
+
 
 class Text_MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Text_Mailing
@@ -144,6 +201,11 @@ class Text_MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView
     extra_context = {
         'title': 'ПРОСМОТР СПИСКА ПЕРИОДИЧНОСТИ РАССЫЛОК'
     }
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_text_mailing=self.request.user
+        )
 
 
 class Text_MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
@@ -156,6 +218,11 @@ class Text_MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Delete
         'title': 'УДАЛЕНИЕ РАССЫЛКИ'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_text_mailing=self.request.user
+        )
+
 
 class Text_MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Text_Mailing
@@ -167,6 +234,11 @@ class Text_MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Update
         'title': 'РЕДАКТИРОВАНИЕ ТЕКСТА РАССЫЛКИ'
     }
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_text_mailing=self.request.user
+        )
+
 
 class Text_MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Text_Mailing
@@ -176,3 +248,8 @@ class Text_MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, Detail
     extra_context = {
         'title': 'ПРОСМОТР ТЕКСТА РАССЫЛКИ'
     }
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner_text_mailing=self.request.user
+        )

@@ -7,7 +7,7 @@ NULLABLE = {'null': True, 'blank': True}
 class Article(models.Model):
     title = models.CharField(max_length=100, verbose_name='заголовок')
     preview = models.ImageField(upload_to='articles/', verbose_name='фото', **NULLABLE)
-    text = models.CharField(max_length=500, verbose_name='содержимое')
+    text = models.CharField(max_length=500, verbose_name='содержимое статьи')
     create_data = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
 
     is_published = models.BooleanField(default=True, verbose_name='доступна ли для публикации')

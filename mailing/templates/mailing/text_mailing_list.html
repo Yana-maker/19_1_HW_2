@@ -5,14 +5,21 @@
 
 <div class="col-6-mb-5">
   <a class="btn btn-outline-success" href="{% url 'mailing:Text_Mailingcreate' %}">
-    добавить текст для рассылки</a>
+    ДОБАВИТЬ текст рассылки</a>
 </div>
+
 {% for object in object_list %}
 
 <div class="col-6-mb-5">
   <div class="card-body">
-    <div class="container">
+      <div class="container">
       <h4><b>{{ object }}</b></h4>
+    </div>
+    <div class="btn-group">
+      <a href="{% url 'mailing:Text_Mailingview' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">просмотр</a>
+      <a href="{% url 'mailing:Text_Mailingedit' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">редактировать</a>
+      <a href="{% url 'mailing:Text_Mailingdelete' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">удалить</a>
+
     </div>
   </div>
 </div>

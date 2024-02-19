@@ -68,8 +68,8 @@ class Text_Mailing(models.Model):
     """ Сообщение для рассылки """
     subject = models.CharField(verbose_name='тема письма', **NULLABLE)
     body = models.CharField(verbose_name='тело письма', **NULLABLE)
-    client_email = models.ManyToManyField('Client', verbose_name='клиенты')
-    frequency = models.ForeignKey('Mailing', verbose_name='периодичность', on_delete=models.CASCADE, **NULLABLE)
+    client_email = models.ManyToManyField(Client, verbose_name='клиенты')
+    frequency = models.ForeignKey(Mailing, verbose_name='периодичность', on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return f'{self.subject}'

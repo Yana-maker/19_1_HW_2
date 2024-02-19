@@ -1,0 +1,22 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="col-md-6">
+        <div class="card-body">
+
+                <p class="card-text d-flex justify-content-between align-items-center">
+                    тема письма : {{object.subject}}
+                </p>
+                <p class="card-text d-flex justify-content-between align-items-center">
+                    тело письма:  {{object.body}}
+                </p>
+                <p class="card-text d-flex justify-content-between align-items-center">
+                    адресаты: {{object.client}}
+                </p>
+                <p class="card-text d-flex justify-content-between align-items-center">
+                    периодичность: {{object.frequency}}
+                </p>
+        </div>
+</div>
+{% endblock %}

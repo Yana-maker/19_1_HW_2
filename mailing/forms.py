@@ -10,13 +10,13 @@ class StyleFormMixin:
 
 
 
-class MailingForm(StyleFormMixin):
+class MailingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = ('name', 'time', 'frequency', 'mailing_status', 'client_email',)
+        fields = ('time_mailing', 'frequency', 'status_mailing',)
 
 
-class ClientForm(StyleFormMixin):
+class ClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
         fields = ('client_email', 'client_fio', 'client_comment',)
@@ -31,15 +31,15 @@ class ClientForm(StyleFormMixin):
 
 
 
-class Log_MailingForm(StyleFormMixin):
+class Log_MailingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Log_Mailing
-        fields = ('datatime_last_attempt', 'status_attempt', 'answer_mail_server', 'mailing',)
+        fields = ('datatime_last_attempt', 'status_attempt', 'answer_mail_server', 'mailing', 'client',)
 
 
 
-class Text_MailingForm(StyleFormMixin):
+class Text_MailingForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Text_Mailing
-        fields = ('subject', 'body', 'client_email',)
+        fields = ('subject', 'body', 'client_email', 'frequency',)

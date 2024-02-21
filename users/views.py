@@ -5,6 +5,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
@@ -36,23 +38,28 @@ class RegisterView(CreateView):
         return super().form_valid(form)
 
 
-def pass_verification(request):
 
+def pass_verification(request):
 
     if request.method == 'POST':
         user_code = request.POST.get('code')
-        user = User.objects.get(code=user_code)
 
-
-        if user.code == user_code:
-            user.is_active = True
-            user.save()
-            return redirect(reverse('users:login'))
-        else:
-            return redirect(reverse('users:verification'))
+        try:
+            user = User.objects.get(code=user_code)
+            if user.code == user_code:
+                user.is_active = True
+                user.save()
+                return redirect(reverse('users:login'))
+        except ObjectDoesNotExist:
+            """ И если пользователь вводит неверный код, то вылетает исключение User.DoesNotExist, 
+            так как юзера с таким кодом попросту в базе нет"""
+            return render(request, 'users/verification_form.html', {'error': 'Неверный код верификации'})
 
     else:
         return render(request, 'users/verification_form.html')
+
+
+
 
 
 

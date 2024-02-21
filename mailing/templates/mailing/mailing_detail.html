@@ -2,18 +2,16 @@
 {% load my_tags %}
 
 {% block content %}
-<div class="col-md-6">
-        <div class="card-body">
 
-                <p class="card-text d-flex justify-content-between align-items-center">
-                    время и дата рассылки : {{object.time_mailing}}
-                </p>
-                <p class="card-text d-flex justify-content-between align-items-center">
-                    периодичность:  {{object.frequency}}
-                </p>
-                <p class="card-text d-flex justify-content-between align-items-center">
-                    статус рассылки: {{object.status_mailing}}
-                </p>
-        </div>
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    рассылка
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"> время и дата рассылки : {{object.time_mailing}} </li>
+    <li class="list-group-item"> периодичность:  {{object.frequency}} </li>
+    <li class="list-group-item"> статус рассылки: {{object.status_mailing}} </li>
+    <li class="list-group-item"> сообщение: {{object.massage}} </li>
+  </ul>
 </div>
 {% endblock %}

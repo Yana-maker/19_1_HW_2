@@ -11,7 +11,7 @@ from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 
-from jobs.jobs import send_mailings
+from jobs.jobs import send_mailings, add_jobs_period
 
 logger = logging.getLogger(__name__)
 
@@ -42,14 +42,16 @@ class Command(BaseCommand):
         scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
         scheduler.add_jobstore(DjangoJobStore(), "default")
 
-        scheduler.add_job(
+        add_jobs_period(scheduler)
+
+        '''scheduler.add_job(
             send_mailings,
-            trigger=CronTrigger(second="*/10"),  # Every 60 seconds
+            trigger=CronTrigger(second="*/24"),  # Every day
             id="send_mailings",  # The `id` assigned to each job MUST be unique
             max_instances=1,
             replace_existing=True,
         )
-        logger.info("Added job 'send_mailings'.")
+        logger.info("Added job 'send_mailings'.")'''
 
         scheduler.add_job(
             delete_old_job_executions,

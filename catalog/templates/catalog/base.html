@@ -21,19 +21,36 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
+        {% if perms.catalog.view_product %}
         <a class="navbar-brand" href="{% url 'catalog:home' %}">МАГАЗИН</a>
+        {% endif %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+
+                {% if perms.catalog.view_product %}
                 <li><a class="nav-link active" aria-current="page" href="{% url 'catalog:home' %}">Главная</a></li>
+                {% endif %}
+                {% if perms.catalog.view_contacts %}
                 <li><a class="nav-link" href="{% url 'catalog:contacts' %}">Контакты</a></li>
+                {% endif %}
+                {% if perms.articles.view_article %}
                 <li><a class="nav-link" href="{% url 'articles:list' %}">Статьи</a></li>
+                {% endif %}
+                {% if perms.mailing.view_mailing %}
                 <li><a class="nav-link" href="{% url 'mailing:list' %}">рассылки</a></li>
+                {% endif %}
+                {% if perms.mailing.view_text_mailing %}
                 <li><a class="nav-link" href="{% url 'mailing:Text_Mailinglist' %}"> текст рассылки</a></li>
+                {% endif %}
+                {% if perms.mailing.view_client %}
                 <li><a class="nav-link" href="{% url 'mailing:Clientlist' %}">пользователи для рассылки</a></li>
+                {% endif %}
+                {% if perms.mailing.view_log_mailing %}
                 <li><a class="nav-link" href="{% url 'mailing:Log_Mailinglist' %}">логи рассылки</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <li><a class="nav-link" href="{% url 'users:logout' %}">Выйти</a></li>
                     <li><a class="nav-link" href="{% url 'users:profile' %}">редактировать профиль</a></li>

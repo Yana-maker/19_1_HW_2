@@ -58,12 +58,12 @@ def send_mailings():
                 recipient_list=client_email,
             )
             Log_Mailing.objects.create(
-                mailing=mailing.frequency,
+
                 datatime_last_attempt=datetime.datetime.now(),
                 status_attempt='УСПЕШНО',
             )
             
-            mailing.objects.update(status_mailing='запущена')
+            mailing.objects.objects.filter(status_mailing="создана").update(status_mailing="запущена")
 
         except Exception as e:
             Log_Mailing.objects.create(

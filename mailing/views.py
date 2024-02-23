@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView, DetailView
 
@@ -22,8 +23,6 @@ class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         self.object.save()
 
         return super().form_valid(form)
-
-
 
 
 class ClientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -51,7 +50,6 @@ class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     }
 
 
-
 class ClientDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Client
     form_class = ClientForm
@@ -62,8 +60,6 @@ class ClientDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     }
 
 
-
-
 class ClientDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Client
     success_url = reverse_lazy('mailing:Clientlist')
@@ -72,8 +68,6 @@ class ClientDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     extra_context = {
         'title': 'УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ'
     }
-
-
 
 
 class MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -94,7 +88,6 @@ class MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
-
 class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Mailing
     permission_required = 'mailing.view_mailing'
@@ -108,6 +101,10 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             owner_mailing=self.request.user
         )
 
+    def random_mailing(request):
+        random_mailing = Mailing.objects.order_by('?')[:3]
+        return render(request, 'mailing/mailing_list.html', {'random_mailing': random_mailing})
+
 
 class MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Mailing
@@ -117,8 +114,6 @@ class MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     extra_context = {
         'title': 'ПРОСМОТР рассылки'
     }
-
-
 
 
 class MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
@@ -131,8 +126,6 @@ class MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
     }
 
 
-
-
 class MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
@@ -142,20 +135,6 @@ class MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     extra_context = {
         'title': 'РЕДАКТИРОВАНИЕ ПЕРИОДИЧНОСТИ РАССЫЛКИ'
     }
-
-
-
-
-class Log_MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    model = Log_Mailing
-    permission_required = 'mailing.view_log_mailing'
-
-    extra_context = {
-        'title': 'ПРОСМОТР ЛОГОВ'
-    }
-
-
-
 
 
 class Text_MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -201,8 +180,6 @@ class Text_MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Delete
     }
 
 
-
-
 class Text_MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Text_Mailing
     form_class = Text_MailingForm
@@ -214,8 +191,6 @@ class Text_MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Update
     }
 
 
-
-
 class Text_MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Text_Mailing
     form_class = Text_MailingForm
@@ -225,3 +200,33 @@ class Text_MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, Detail
         'title': 'ПРОСМОТР ТЕКСТА РАССЫЛКИ'
     }
 
+
+class Log_MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    model = Log_Mailing
+    permission_required = 'mailing.view_log_mailing'
+
+    extra_context = {
+        'title': 'ПРОСМОТР СПИСКА ЛОГОВ'
+    }
+
+
+class Log_mailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    model = Log_Mailing
+    permission_required = 'mailing.view_log_mailing'
+
+    extra_context = {
+        'title': 'ПРОСМОТР ЛОГА'
+    }
+
+
+
+
+class Log_mailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Log_Mailing
+    permission_required = 'mailing.delete_log_mailing'
+
+    extra_context = {
+        'title': 'УДАЛЕНИЕ ЛОГА'
+    }
+
+    success_url = reverse_lazy('mailing:Log_Mailinglist')

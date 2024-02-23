@@ -8,13 +8,12 @@
 
 <div class="card" style="width: 18rem;">
   <div class="card-header">
-    рассылка {{ object.mailing }}
+    Лог рассылки {{ object.mailing }}
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"> дата и время последней попытки : {{ object.datatime_last_attempt }} </li>
-    <li class="list-group-item"> статус попытки : {{ object.status_attempt }} </li>
-    <li class="list-group-item"> ответ почтового сервера: {{ object.answer_mail_server }} </li>
-  </ul>
+  <div class="btn-group">
+      <a href="{% url 'mailing:Log_Mailingview' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">просмотр</a>
+      <a href="{% url 'mailing:Log_Mailingdelete' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">удалить</a>
+  </div>
 </div>
 
 

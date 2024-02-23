@@ -1,0 +1,18 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    Лог рассылки
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"> время и дата последней попытки : {{object.datatime_last_attempt}} </li>
+    <li class="list-group-item"> рассылка:  {{object.mailing}} </li>
+    <li class="list-group-item"> статус попытки: {{object.status_attempt}} </li>
+    <li class="list-group-item"> ответ сервера: {{object.answer_mail_server}} </li>
+  </ul>
+</div>
+
+{% endblock %}

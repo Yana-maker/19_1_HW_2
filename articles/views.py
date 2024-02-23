@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
@@ -38,6 +39,12 @@ class ArticleListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = super().get_queryset(*args, **kwargs)
         queryset = queryset.filter(is_published=True)
         return queryset
+
+
+    def random_articles(request):
+        """чтобы вывести 3 случайные статьи """
+        random_articles = Article.objects.order_by('?')[:3]
+        return render(request, 'articles/article_list.html', {'random_articles': random_articles})
 
 
 class ArticleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):

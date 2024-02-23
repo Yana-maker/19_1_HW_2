@@ -101,9 +101,6 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             owner_mailing=self.request.user
         )
 
-    def random_mailing(request):
-        random_mailing = Mailing.objects.order_by('?')[:3]
-        return render(request, 'mailing/mailing_list.html', {'random_mailing': random_mailing})
 
 
 def toggle_status(request, pk):

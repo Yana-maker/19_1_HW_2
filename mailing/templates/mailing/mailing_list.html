@@ -19,7 +19,11 @@
       <a href="{% url 'mailing:view' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">просмотр</a>
       <a href="{% url 'mailing:edit' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">редактировать</a>
       <a href="{% url 'mailing:delete' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">удалить</a>
-
+      {% if object.status_mailing == 'создана' %}
+      <a class="btn btn-warning" href="{% url 'mailing:toggle_status' object.pk %}">Деактивировать</a>
+      {% else %}
+      <a class="btn btn-success" href="{% url 'mailing:toggle_status' object.pk %}">Aктивировать</a>
+      {% endif %}
     </div>
   </div>
 </div>

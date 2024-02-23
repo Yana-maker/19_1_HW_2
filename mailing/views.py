@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView, DetailView
 
 from mailing.forms import ClientForm, Log_MailingForm, MailingForm, Text_MailingForm
@@ -104,6 +104,17 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def random_mailing(request):
         random_mailing = Mailing.objects.order_by('?')[:3]
         return render(request, 'mailing/mailing_list.html', {'random_mailing': random_mailing})
+
+
+def toggle_status(request, pk):
+    mailing = get_object_or_404(Mailing, pk=pk)
+
+    if mailing.status_mailing == 'создана':
+        mailing.status_mailing = 'отключена'
+    else:
+        mailing.status_mailing = 'создана'
+    mailing.save()
+    return redirect(reverse('mailing:list'))
 
 
 class MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):

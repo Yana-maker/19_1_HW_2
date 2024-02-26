@@ -9,3 +9,5 @@ def save_profile(sender, instance, created, **kwargs):
     if created:
         g1 = Group.objects.get(name='менеджер')
         instance.groups.add(g1)
+
+
